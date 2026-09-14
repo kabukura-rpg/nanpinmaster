@@ -1,0 +1,385 @@
+:root {
+  --bg: #0d1017;
+  --panel: #141924;
+  --line: rgba(255, 255, 255, 0.09);
+  --text: #e8edf5;
+  --muted: rgba(232, 237, 245, 0.55);
+  --accent: #ffd23f;
+  --buy: #ff4d5a;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', system-ui,
+    sans-serif;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#app {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.screen {
+  width: 100%;
+  max-width: 520px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--safe-b);
+}
+
+/* ---------------------------------------------------------------- 共通 */
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: #17130a;
+  border-color: transparent;
+}
+
+.btn.ghost {
+  background: transparent;
+}
+
+.btn[disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.disclaimer {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--muted);
+  text-align: center;
+  padding: 10px 16px;
+}
+
+/* ---------------------------------------------------------------- タイトル */
+
+.title-screen {
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.title-screen h1 {
+  font-size: 26px;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.title-screen .sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* ---------------------------------------------------------------- ゲーム */
+
+.game-screen {
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.price {
+  padding: 2px 16px 8px;
+  font-size: 34px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.chart-wrap {
+  flex: 1 1 auto;
+  position: relative;
+  min-height: 0;
+}
+
+canvas#chart {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+}
+
+.buy-area {
+  flex: 0 0 auto;
+  padding: 12px 16px 16px;
+}
+
+button#buy {
+  width: 100%;
+  height: 74px;
+  border: none;
+  border-radius: 16px;
+  background: var(--buy);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+}
+
+button#buy[disabled] {
+  background: #2a2f3c;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* ---------------------------------------------------------------- REVEAL */
+
+.reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(6, 8, 12, 0.86);
+  text-align: center;
+  padding: 24px;
+}
+
+.reveal.blackout {
+  background: #000;
+}
+
+.reveal .rank {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.reveal .rank.god {
+  color: var(--accent);
+  text-shadow: 0 0 24px rgba(255, 210, 63, 0.7);
+}
+
+.reveal .hint {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* MVPの演出はテキストと図形のプレースホルダー */
+.cutin-frame {
+  width: min(78%, 320px);
+  height: 96px;
+  border: 2px dashed rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  animation: flash 0.45s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes flash {
+  from {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.pierce {
+  position: absolute;
+  left: -30%;
+  width: 26px;
+  height: 160%;
+  top: -30%;
+  background: linear-gradient(180deg, transparent, var(--buy), transparent);
+  animation: pierce 1.1s ease-in-out forwards;
+}
+
+@keyframes pierce {
+  to {
+    left: 130%;
+  }
+}
+
+/* ---------------------------------------------------------------- 結果 */
+
+.result-screen {
+  overflow-y: auto;
+  padding: 14px 16px calc(16px + var(--safe-b));
+  gap: 12px;
+}
+
+.result-rank {
+  font-size: 28px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.cell {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.cell .k {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.cell .val {
+  font-size: 20px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.result-chart {
+  height: 210px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.result-chart canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.note {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.rounds {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.legend span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 8px;
+}
+
+.legend .genuine {
+  color: var(--accent);
+  border-color: rgba(255, 210, 63, 0.5);
+}
+
+.legend .fake {
+  color: var(--muted);
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.stats-table th,
+.stats-table td {
+  text-align: left;
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.stats-table td:last-child,
+.stats-table th:last-child {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
